@@ -70,7 +70,7 @@ public abstract class MixinBlock implements IMetaAware {
     public boolean isNormalCube(IBlockAccess world, int x, int y, int z) {
         return this.getMaterial()
             .isOpaque() && this.renderAsNormalBlock(world, x, y, z)
-            && !this.canProvidePower();
+            && !this.canProvidePower(world, x, y, z);
     }
 
     /**
@@ -93,6 +93,15 @@ public abstract class MixinBlock implements IMetaAware {
     @Overwrite(remap = false)
     public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int z, int meta) {
         return this.isNormalCube(world, x, y, z);
+    }
+
+    /**
+     * @author Midnight145
+     * @reason Short method, easier to rewrite
+     */
+    @Overwrite(remap = false)
+    public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
+        return canProvidePower(world, x, y, z) && side != -1;
     }
 
     // IMetaAware Overrides
@@ -134,5 +143,10 @@ public abstract class MixinBlock implements IMetaAware {
     @SideOnly(Side.CLIENT)
     public float getAmbientOcclusionLightValue(IBlockAccess world, int x, int y, int z) {
         return this.isBlockNormalCube(world, x, y, z) ? 0.2F : 1.0F;
+    }
+
+    @Override
+    public boolean canProvidePower(IBlockAccess world, int x, int y, int z) {
+        return this.canProvidePower();
     }
 }

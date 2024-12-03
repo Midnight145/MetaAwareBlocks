@@ -30,6 +30,15 @@ public class MixinBlockTrapDoor {
         return metaAware$func_150119_a(block, world, x, y, z);
     }
 
+    @Redirect(
+        method = "onNeighborBlockChange",
+        at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;canProvidePower()Z"))
+    private boolean redirectOnNeighborBlockChange(Block block, @Local(ordinal = 0, argsOnly = true) World world,
+        @Local(ordinal = 0, argsOnly = true) int x, @Local(ordinal = 1, argsOnly = true) int y,
+        @Local(ordinal = 2, argsOnly = true) int z) {
+        return ((IMetaAware) block).canProvidePower(world, x, y, z);
+    }
+
     @Unique
     private boolean metaAware$func_150119_a(Block block, IBlockAccess world, int x, int y, int z) {
         return block.getMaterial()

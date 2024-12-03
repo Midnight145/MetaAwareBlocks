@@ -26,6 +26,8 @@ public interface IMetaAware {
 
     int getMobilityFlag(IBlockAccess world, int x, int y, int z);
 
+    boolean canProvidePower(IBlockAccess world, int x, int y, int z);
+
     // Other useful overridable methods in Block
     // public int getLightOpacity(IBlockAccess world, int x, int y, int z)
 
