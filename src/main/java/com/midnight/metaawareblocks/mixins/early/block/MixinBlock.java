@@ -21,6 +21,7 @@ public abstract class MixinBlock implements IMetaAware {
     public abstract boolean renderAsNormalBlock();
 
     @Shadow
+    @SideOnly(Side.CLIENT)
     public abstract boolean isBlockNormalCube();
 
     @Shadow
@@ -39,9 +40,6 @@ public abstract class MixinBlock implements IMetaAware {
 
     @Shadow
     public abstract boolean isOpaqueCube();
-
-    @Shadow
-    public abstract int getRenderBlockPass();
 
     @Shadow
     public abstract int getMobilityFlag();
@@ -105,6 +103,7 @@ public abstract class MixinBlock implements IMetaAware {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean isBlockNormalCube(IBlockAccess world, int x, int y, int z) {
         return this.isBlockNormalCube();
     }
@@ -121,6 +120,7 @@ public abstract class MixinBlock implements IMetaAware {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public int getRenderBlockPass(IBlockAccess world, int x, int y, int z) {
         return 0;
     }
@@ -131,6 +131,7 @@ public abstract class MixinBlock implements IMetaAware {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public float getAmbientOcclusionLightValue(IBlockAccess world, int x, int y, int z) {
         return this.isBlockNormalCube(world, x, y, z) ? 0.2F : 1.0F;
     }

@@ -1,5 +1,7 @@
 package com.midnight.metaawareblocks.mixins.early.block;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.world.World;
@@ -14,6 +16,7 @@ import com.midnight.metaawareblocks.api.IMetaAware;
 @Mixin(value = BlockLiquid.class, priority = 1001)
 public class MixinBlockLiquid {
 
+    @SideOnly(Side.CLIENT)
     @Redirect(
         method = "randomDisplayTick",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;isOpaqueCube()Z"))
