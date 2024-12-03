@@ -165,8 +165,8 @@ public class MixinBlockVine {
     private boolean redirectUpdateTick4(BlockVine instance, Block block,
         @Local(ordinal = 0, argsOnly = true) World world, @Local(ordinal = 0, argsOnly = true) int x,
         @Local(ordinal = 1, argsOnly = true) int y, @Local(ordinal = 2, argsOnly = true) int z,
-        @Local(name = "i1") int i1) {
-        return metaAware$func_150093_a(block, world, x + Direction.offsetX[i1], y, z + Direction.offsetZ[i1]);
+        @Local(name = "i2") int i2) {
+        return metaAware$func_150093_a(block, world, x + Direction.offsetX[i2], y, z + Direction.offsetZ[i2]);
     }
 
     @Redirect(
