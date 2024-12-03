@@ -1,0 +1,8 @@
+{
+  "required": true,
+  "minVersion": "0.7.11",
+  "package": "com.midnight.metaawareblocks.mixins.early",
+  "refmap": "mixins.metaawareblocks.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8"
+}
