@@ -1,4 +1,4 @@
-package com.myname.mymodid;
+package com.midnight.metaawareblocks;
 
 import java.io.File;
 
