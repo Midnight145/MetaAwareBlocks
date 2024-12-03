@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.midnight.metaawareblocks.api.IMetaAware;
 
-@Mixin(value = WorldRenderer.class, priority = 1001)
+@Mixin(value = WorldRenderer.class)
 public class MixinWorldRenderer {
 
     @Shadow

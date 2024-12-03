@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.midnight.metaawareblocks.api.IMetaAware;
 
-@Mixin(value = Render.class, priority = 1001)
+@Mixin(value = Render.class)
 public abstract class MixinRender {
 
     @Shadow

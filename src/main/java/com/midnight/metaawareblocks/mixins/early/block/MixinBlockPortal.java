@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Mixin(value = BlockPortal.class, priority = 1001)
+@Mixin(value = BlockPortal.class)
 public class MixinBlockPortal {
 
     @Redirect(method = "updateTick", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;isNormalCube()Z"))

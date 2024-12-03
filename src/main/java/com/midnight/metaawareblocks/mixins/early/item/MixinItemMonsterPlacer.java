@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.midnight.metaawareblocks.api.IMetaAware;
 
-@Mixin(value = ItemMonsterPlacer.class, priority = 1001)
+@Mixin(value = ItemMonsterPlacer.class)
 public class MixinItemMonsterPlacer {
 
     @Redirect(method = "onItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;getRenderType()I"))

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.midnight.metaawareblocks.api.IMetaAware;
 
-@Mixin(value = EntityEnderman.class, priority = 1001)
+@Mixin(value = EntityEnderman.class)
 public class MixinEntityEnderman extends EntityMob {
 
     public MixinEntityEnderman(World p_i1738_1_) {

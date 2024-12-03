@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Mixin(value = Village.class, priority = 1001)
+@Mixin(value = Village.class)
 public class MixinVillage {
 
     @Shadow

@@ -14,7 +14,7 @@ import com.midnight.metaawareblocks.api.IMetaAware;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mixin(value = BlockLiquid.class, priority = 1001)
+@Mixin(value = BlockLiquid.class)
 public class MixinBlockLiquid {
 
     @SideOnly(Side.CLIENT)

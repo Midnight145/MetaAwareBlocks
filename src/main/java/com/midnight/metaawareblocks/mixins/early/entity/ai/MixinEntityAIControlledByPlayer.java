@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.midnight.metaawareblocks.api.IMetaAware;
 
-@Mixin(value = EntityAIControlledByPlayer.class, priority = 1001)
+@Mixin(value = EntityAIControlledByPlayer.class)
 public class MixinEntityAIControlledByPlayer {
 
     @Shadow

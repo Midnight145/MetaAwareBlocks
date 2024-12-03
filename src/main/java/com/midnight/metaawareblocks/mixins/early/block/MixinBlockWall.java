@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.midnight.metaawareblocks.api.IMetaAware;
 
-@Mixin(value = BlockWall.class, priority = 1001)
+@Mixin(value = BlockWall.class)
 public class MixinBlockWall {
 
     @Redirect(

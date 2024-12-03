@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.midnight.metaawareblocks.api.IMetaAware;
 
-@Mixin(value = EntityLeashKnot.class, priority = 1001)
+@Mixin(value = EntityLeashKnot.class)
 public abstract class MixinEntityLeashKnot extends EntityHanging {
 
     public MixinEntityLeashKnot(World worldIn) {

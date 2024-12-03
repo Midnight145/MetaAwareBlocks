@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.authlib.GameProfile;
 
-@Mixin(value = EntityPlayerSP.class, priority = 1001)
+@Mixin(value = EntityPlayerSP.class)
 public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
 
     public MixinEntityPlayerSP(World p_i45074_1_, GameProfile p_i45074_2_) {

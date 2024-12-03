@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Mixin(value = EntityMinecart.class, priority = 1001)
+@Mixin(value = EntityMinecart.class)
 public abstract class MixinEntityMinecart extends Entity {
 
     public MixinEntityMinecart(World worldIn) {

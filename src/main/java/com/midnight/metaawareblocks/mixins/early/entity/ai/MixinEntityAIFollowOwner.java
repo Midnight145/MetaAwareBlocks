@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Mixin(value = EntityAIFollowOwner.class, priority = 1001)
+@Mixin(value = EntityAIFollowOwner.class)
 public abstract class MixinEntityAIFollowOwner extends EntityAIBase {
 
     @Shadow

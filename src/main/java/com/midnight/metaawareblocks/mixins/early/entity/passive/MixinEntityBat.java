@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-@Mixin(value = EntityBat.class, priority = 1001)
+@Mixin(value = EntityBat.class)
 public abstract class MixinEntityBat extends Entity {
 
     public MixinEntityBat(World worldIn) {

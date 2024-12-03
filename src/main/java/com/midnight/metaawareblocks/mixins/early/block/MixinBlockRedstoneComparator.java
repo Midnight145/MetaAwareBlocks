@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.llamalad7.mixinextras.sugar.Local;
 
-@Mixin(value = BlockRedstoneComparator.class, priority = 1001)
+@Mixin(value = BlockRedstoneComparator.class)
 public class MixinBlockRedstoneComparator {
 
     @Redirect(

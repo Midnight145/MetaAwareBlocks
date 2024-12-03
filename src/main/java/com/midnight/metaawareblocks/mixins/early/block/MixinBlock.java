@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SuppressWarnings("AddedMixinMembersNamePattern")
-@Mixin(value = Block.class, priority = 1001)
+@Mixin(value = Block.class)
 public abstract class MixinBlock implements IMetaAware {
 
     @Shadow
