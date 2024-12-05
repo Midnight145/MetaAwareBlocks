@@ -1,8 +1,7 @@
 package com.midnight.metaawareblocks.api;
 
 import net.minecraft.world.IBlockAccess;
-
-import org.apache.commons.lang3.NotImplementedException;
+import net.minecraft.world.World;
 
 public interface IMetaAware {
 
@@ -10,25 +9,51 @@ public interface IMetaAware {
         return this.renderAsNormalBlock(world.getBlockMetadata(x, y, z));
     }
 
-    boolean renderAsNormalBlock(int meta);
+    default boolean renderAsNormalBlock(int meta) {
+        return this.renderAsNormalBlock();
+    };
 
-    float getAmbientOcclusionLightValue(IBlockAccess world, int x, int y, int z);
-
-    boolean isBlockNormalCube(IBlockAccess world, int x, int y, int z);
-
-    int getRenderType(IBlockAccess world, int x, int y, int z); // some not doable
-
-    boolean isOpaqueCube(IBlockAccess world, int x, int y, int z);
-
-    default int getRenderBlockPass(IBlockAccess world, int x, int y, int z) {
-        throw new NotImplementedException("Not implemented yet");
+    default float getAmbientOcclusionLightValue(IBlockAccess world, int x, int y, int z) {
+        return this.getAmbientOcclusionLightValue();
     }
 
-    int getMobilityFlag(IBlockAccess world, int x, int y, int z);
+    default boolean isBlockNormalCube(IBlockAccess world, int x, int y, int z) {
+        return this.isBlockNormalCube();
+    }
 
-    boolean canProvidePower(IBlockAccess world, int x, int y, int z);
+    default boolean isOpaqueCube(IBlockAccess world, int x, int y, int z) {
+        return this.isOpaqueCube();
+    }
+
+    default int getMobilityFlag(IBlockAccess world, int x, int y, int z) {
+        return this.getMobilityFlag();
+    }
+
+    default boolean canProvidePower(IBlockAccess world, int x, int y, int z) {
+        return this.canProvidePower();
+    }
+
+    // Already exists in Block, but the parameterless version is normally used originally, so this is here for clarity.
+    default boolean isNormalCube(World world, int x, int y, int z) {
+        return this.isNormalCube();
+    }
 
     // Other useful overridable methods in Block
     // public int getLightOpacity(IBlockAccess world, int x, int y, int z)
 
+    // Overrides from Block
+
+    boolean renderAsNormalBlock();
+
+    float getAmbientOcclusionLightValue();
+
+    boolean isBlockNormalCube();
+
+    boolean isOpaqueCube();
+
+    int getMobilityFlag();
+
+    boolean canProvidePower();
+
+    boolean isNormalCube();
 }

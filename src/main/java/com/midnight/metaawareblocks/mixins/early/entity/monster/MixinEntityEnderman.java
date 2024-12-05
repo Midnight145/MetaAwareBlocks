@@ -7,8 +7,9 @@ import net.minecraft.world.World;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.midnight.metaawareblocks.api.IMetaAware;
 
@@ -19,11 +20,12 @@ public class MixinEntityEnderman extends EntityMob {
         super(p_i1738_1_);
     }
 
-    @Redirect(
+    @WrapOperation(
         method = "onLivingUpdate()V",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;renderAsNormalBlock()Z"))
-    public boolean mixinOnLivingUpdate(Block instance, @Local(name = "k") int x, @Local(name = "i") int y,
-        @Local(name = "j") int z) {
-        return ((IMetaAware) instance).renderAsNormalBlock(this.worldObj, x, y, z);
+    public boolean mixinOnLivingUpdate(Block instance, Operation<Boolean> original, @Local(name = "k") int x,
+        @Local(name = "i") int y, @Local(name = "j") int z) {
+        return instance instanceof IMetaAware aware ? aware.renderAsNormalBlock(this.worldObj, x, y, z)
+            : original.call(instance);
     }
 }
