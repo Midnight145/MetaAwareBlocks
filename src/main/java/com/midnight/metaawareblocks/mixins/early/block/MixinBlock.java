@@ -13,16 +13,11 @@ import com.midnight.metaawareblocks.api.IMetaAware;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@SuppressWarnings("AddedMixinMembersNamePattern")
 @Mixin(value = Block.class)
-public abstract class MixinBlock implements IMetaAware {
+public abstract class MixinBlock {
 
     @Shadow
     public abstract boolean renderAsNormalBlock();
-
-    @Shadow
-    @SideOnly(Side.CLIENT)
-    public abstract boolean isBlockNormalCube();
 
     @Shadow
     public abstract Material getMaterial();
@@ -39,16 +34,10 @@ public abstract class MixinBlock implements IMetaAware {
     public abstract boolean hasTileEntity(int meta);
 
     @Shadow
-    public abstract boolean isOpaqueCube();
-
-    @Shadow
-    public abstract int getMobilityFlag();
-
-    @Shadow
-    public abstract int getRenderType();
-
-    @Shadow
     protected double minY, minZ, minX, maxY, maxZ, maxX;
+
+    @Shadow
+    public abstract boolean isNormalCube();
 
     /**
      * @author Midnight145
@@ -59,7 +48,9 @@ public abstract class MixinBlock implements IMetaAware {
     public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side) {
         return side == 0 && this.minY > 0.0D || (side == 1 && this.maxY < 1.0D || (side == 2 && this.minZ > 0.0D
             || (side == 3 && this.maxZ < 1.0D || (side == 4 && this.minX > 0.0D || (side == 5 && this.maxX < 1.0D
-                || !((IMetaAware) world.getBlock(x, y, z)).isOpaqueCube(world, x, y, z))))));
+                || !(world.getBlock(x, y, z) instanceof IMetaAware aware ? aware.isOpaqueCube(world, x, y, z)
+                    : world.getBlock(x, y, z)
+                        .isOpaqueCube()))))));
     }
 
     /**
@@ -68,9 +59,14 @@ public abstract class MixinBlock implements IMetaAware {
      */
     @Overwrite(remap = false)
     public boolean isNormalCube(IBlockAccess world, int x, int y, int z) {
+        if (this instanceof IMetaAware aware) {
+            return this.getMaterial()
+                .isOpaque() && aware.renderAsNormalBlock(world, x, y, z)
+                && !aware.canProvidePower(world, x, y, z);
+        }
         return this.getMaterial()
-            .isOpaque() && this.renderAsNormalBlock(world, x, y, z)
-            && !this.canProvidePower(world, x, y, z);
+            .isOpaque() && this.renderAsNormalBlock()
+            && !this.canProvidePower();
     }
 
     /**
@@ -83,7 +79,8 @@ public abstract class MixinBlock implements IMetaAware {
         if (meta == null) {
             meta = 0;
         }
-        return this.renderAsNormalBlock(meta) && !this.hasTileEntity(meta);
+        return (this instanceof IMetaAware aware ? aware.renderAsNormalBlock(meta) : this.renderAsNormalBlock())
+            && !this.hasTileEntity(meta);
     }
 
     /**
@@ -92,61 +89,7 @@ public abstract class MixinBlock implements IMetaAware {
      */
     @Overwrite(remap = false)
     public boolean shouldCheckWeakPower(IBlockAccess world, int x, int y, int z, int meta) {
-        return this.isNormalCube(world, x, y, z);
+        return this instanceof IMetaAware ? this.isNormalCube(world, x, y, z) : this.isNormalCube();
     }
 
-    /**
-     * @author Midnight145
-     * @reason Short method, easier to rewrite
-     */
-    @Overwrite(remap = false)
-    public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
-        return canProvidePower(world, x, y, z) && side != -1;
-    }
-
-    // IMetaAware Overrides
-
-    @Override
-    public boolean renderAsNormalBlock(int meta) {
-        return this.renderAsNormalBlock();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean isBlockNormalCube(IBlockAccess world, int x, int y, int z) {
-        return this.isBlockNormalCube();
-    }
-
-    @Override
-    public int getRenderType(IBlockAccess world, int x, int y, int z) {
-        return this.getRenderType();
-        // return -1;
-    }
-
-    @Override
-    public boolean isOpaqueCube(IBlockAccess world, int x, int y, int z) {
-        return this.isOpaqueCube();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int getRenderBlockPass(IBlockAccess world, int x, int y, int z) {
-        return 0;
-    }
-
-    @Override
-    public int getMobilityFlag(IBlockAccess world, int x, int y, int z) {
-        return this.getMobilityFlag();
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public float getAmbientOcclusionLightValue(IBlockAccess world, int x, int y, int z) {
-        return this.isBlockNormalCube(world, x, y, z) ? 0.2F : 1.0F;
-    }
-
-    @Override
-    public boolean canProvidePower(IBlockAccess world, int x, int y, int z) {
-        return this.canProvidePower();
-    }
 }

@@ -11,10 +11,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import com.midnight.metaawareblocks.api.IMetaAware;
 
 @Mixin(value = BlockRedstoneWire.class)
 public abstract class MixinBlockRedstoneWire {
@@ -31,28 +33,31 @@ public abstract class MixinBlockRedstoneWire {
         return false;
     }
 
-    @Redirect(
+    @WrapOperation(
         method = "func_150175_a",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;isNormalCube()Z", ordinal = 0))
-    private boolean isNormalCube0(Block block, @Local(ordinal = 0, argsOnly = true) World world,
-        @Local(name = "k2") int x, @Local(ordinal = 1, argsOnly = true) int y, @Local(name = "l2") int z) {
-        return block.isNormalCube(world, x, y, z);
+    private boolean isNormalCube0(Block instance, Operation<Boolean> original,
+        @Local(ordinal = 0, argsOnly = true) World world, @Local(name = "k2") int x,
+        @Local(ordinal = 1, argsOnly = true) int y, @Local(name = "l2") int z) {
+        return instance instanceof IMetaAware aware ? aware.isNormalCube(world, x, y, z) : original.call(instance);
     }
 
-    @Redirect(
+    @WrapOperation(
         method = "func_150175_a",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;isNormalCube()Z", ordinal = 1))
-    private boolean isNormalCube1(Block block, @Local(ordinal = 0, argsOnly = true) World world,
-        @Local(name = "k2") int x, @Local(ordinal = 1, argsOnly = true) int y, @Local(name = "l2") int z) {
-        return block.isNormalCube(world, x, y + 1, z);
+    private boolean isNormalCube1(Block instance, Operation<Boolean> original,
+        @Local(ordinal = 0, argsOnly = true) World world, @Local(name = "k2") int x,
+        @Local(ordinal = 1, argsOnly = true) int y, @Local(name = "l2") int z) {
+        return instance instanceof IMetaAware aware ? aware.isNormalCube(world, x, y + 1, z) : original.call(instance);
     }
 
-    @Redirect(
+    @WrapOperation(
         method = "func_150175_a",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;isNormalCube()Z", ordinal = 2))
-    private boolean isNormalCube2(Block block, @Local(ordinal = 0, argsOnly = true) World world,
-        @Local(name = "k2") int x, @Local(ordinal = 1, argsOnly = true) int y, @Local(name = "l2") int z) {
-        return block.isNormalCube(world, x, y, z);
+    private boolean isNormalCube2(Block instance, Operation<Boolean> original,
+        @Local(ordinal = 0, argsOnly = true) World world, @Local(name = "k2") int x,
+        @Local(ordinal = 1, argsOnly = true) int y, @Local(name = "l2") int z) {
+        return instance instanceof IMetaAware aware ? aware.isNormalCube(world, x, y, z) : original.call(instance);
     }
 
     @Inject(
@@ -62,7 +67,7 @@ public abstract class MixinBlockRedstoneWire {
             target = "Lnet/minecraft/block/BlockRedstoneWire;func_150172_m(Lnet/minecraft/world/World;III)V",
             ordinal = 3),
         cancellable = true)
-    private void mixinIsProvidingWeakPower(World world, int x, int y, int z, CallbackInfo ci) {
+    private void mixinOnBlockAdded(World world, int x, int y, int z, CallbackInfo ci) {
         tf$updateNeighbors(world, x, y, z);
         ci.cancel();
     }
@@ -74,8 +79,7 @@ public abstract class MixinBlockRedstoneWire {
             target = "Lnet/minecraft/block/BlockRedstoneWire;func_150172_m(Lnet/minecraft/world/World;III)V",
             ordinal = 3),
         cancellable = true)
-    private void mixinIsProvidingWeakPower(World world, int x, int y, int z, Block blockBroken, int meta,
-        CallbackInfo ci) {
+    private void mixinBreakBlock(World world, int x, int y, int z, Block blockBroken, int meta, CallbackInfo ci) {
         tf$updateNeighbors(world, x, y, z);
         ci.cancel();
     }
